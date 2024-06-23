@@ -12,10 +12,15 @@ use twitter_v2::{authorization::Oauth1aToken, TwitterApi};
 async fn main() {
     let cmd = Command::new("config")
         .short_flag('c')
-        .arg(Arg::new("file").short('f').default_value("Config.toml"))
+        .arg(
+            Arg::new("file")
+                .short('f')
+                .default_value("Config.toml")
+                .required(false),
+        )
         .get_matches();
 
-    let config = parse_config(Path::new(cmd.get_one::<String>("config").unwrap()))
+    let config = parse_config(Path::new(cmd.get_one::<String>("file").unwrap()))
         .await
         .unwrap();
 
