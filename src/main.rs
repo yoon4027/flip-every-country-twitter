@@ -28,7 +28,7 @@ async fn main() {
 
     let mut weights = vec![1; countries.len()];
 
-    weights[79] = 10;
+    weights[79] = 8;
 
     let rand_weight = WeightedIndex::new(&weights).unwrap();
 
@@ -36,7 +36,9 @@ async fn main() {
         let chosen = countries.get(rand_weight.sample(&mut OsRng));
 
         if let Some(count) = chosen {
-            let text = match celes::Country::from_str(&count.name.replace(" ", "")) {
+            let name = count.name.replace(" ", "");
+
+            let text = match celes::Country::from_str(&name) {
                 Ok(a) => format!("Fuck #{} {} ({})", count.name, count.emoji, a.alpha2,),
                 Err(_) => format!("Fuck #{} {}", count.name, count.emoji),
             };
