@@ -1,5 +1,6 @@
 use std::{path::Path, str::FromStr, time::Duration};
 
+use clap::{Arg, Command};
 use fuck_every_country_twit::{parse_config, parse_csv};
 use rand::{
     distributions::{Distribution, WeightedIndex},
@@ -9,7 +10,15 @@ use twitter_v2::{authorization::Oauth1aToken, TwitterApi};
 
 #[tokio::main]
 async fn main() {
-    let config = parse_config(Path::new("Config.toml")).await.unwrap();
+    let cmd = Command::new("config")
+        .short_flag('c')
+        .arg(Arg::new("file").short('f').default_value("Config.toml"))
+        .get_matches();
+
+    let config = parse_config(Path::new(cmd.get_one::<String>("config").unwrap()))
+        .await
+        .unwrap();
+
     let countries_op = parse_csv();
 
     let countries = match countries_op {

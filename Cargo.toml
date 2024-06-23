@@ -5,6 +5,7 @@ edition = "2021"
 
 [dependencies]
 celes = "2.4.0"
+clap = "4.5.7"
 csv = "1.3.0"
 rand = "0.8.5"
 serde = { version = "1.0.203", features = ["derive"] }
